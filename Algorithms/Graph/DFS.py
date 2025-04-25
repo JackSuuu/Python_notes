@@ -1,3 +1,4 @@
+# DFS recursive version, keep append not visited node until reach to end
 def dfs_rec(adj, visited, s):
     # Mark the current vertex as visited
     visited[s] = True
@@ -11,7 +12,7 @@ def dfs_rec(adj, visited, s):
         if not visited[i]:
             dfs_rec(adj, visited, i)
 
-
+# DFS main function, called recursive function
 def dfs(adj, s):
     visited = [False] * len(adj)
     # Call the recursive DFS function

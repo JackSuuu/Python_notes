@@ -13,7 +13,7 @@ graph["jonny"] = []
 
 print(graph)
 
-
+# BFS is implement using a deque(FIFO)
 def BFS(target, root="you"):
     search_queue = deque()
     search_queue += graph[root]
