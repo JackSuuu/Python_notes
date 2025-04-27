@@ -1,6 +1,6 @@
 import numpy as np
 
-
+# 快速傅立叶变换 - Fast Fourier Transform
 def fft_recursive(x):
     N = x.shape[0]
 

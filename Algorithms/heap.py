@@ -1,3 +1,4 @@
+# Heap is used to implement Priority Queue
 class MinHeap:
     def __init__(self):
         self.heap = []

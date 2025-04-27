@@ -19,17 +19,19 @@ def cyk_parse(grammar, sentence):
     # DP table: dp[i][j] stores non-terminals that derive substring sentence[i:j+1]
     dp = [[set() for _ in range(n)] for _ in range(n)]
     
-    # Step 1: Fill table for single words
+    # Step 1: Fill table for single words - diagonal cell
     for i, word in enumerate(sentence):
         for lhs, rhs in grammar.items():
             if word in rhs:
-                dp[i][i].add(lhs)
+                dp[i][i].add(lhs) # [i][i] -> [0][0], [1][1], [2][2]
 
     # Step 2: Fill table for longer substrings
     for length in range(2, n + 1):  # Length from 2 to n
         for i in range(n - length + 1):  # Start index
             j = i + length - 1  # End index
-            
+            # * for print the dp table out, to see process
+            print("\n".join(["\t".join([str(cell) for cell in row]) for row in dp]))
+            print("=======================================")
             for k in range(i, j):  # Split point
                 for lhs, rhs in grammar.items():
                     for production in rhs:
