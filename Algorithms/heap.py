@@ -3,6 +3,7 @@ class MinHeap:
     def __init__(self):
         self.heap = []
 
+    # key of heap
     def parent(self, i): return (i - 1) // 2
     def left(self, i): return 2 * i + 1
     def right(self, i): return 2 * i + 2
@@ -69,26 +70,61 @@ class MaxHeap:
             self.heap[i], self.heap[p] = self.heap[p], self.heap[i]
             i = p
 
+    def extract_max(self):
+        if not self.heap:
+            return None
+        if len(self.heap) == 1:
+            return self.heap.pop()
+        root = self.heap[0]
+        # Move last element to root and heapify down
+        self.heap[0] = self.heap.pop()
+        self.down_heapify(0)
+        return root
+
+    def down_heapify(self, i):
+        size = len(self.heap)
+        while self.left(i) < size:
+            largest = i
+            l = self.left(i)
+            r = self.right(i)
+
+            if l < size and self.heap[l] > self.heap[largest]:
+                largest = l
+            if r < size and self.heap[r] > self.heap[largest]:
+                largest = r
+            if largest == i:
+                break
+            self.heap[i], self.heap[largest] = self.heap[largest], self.heap[i]
+            i = largest
+
     def print_heap(self):
         print(self.heap)
 
 
 if __name__ == "__main__":
-    print("MinHeap Example:")
-    h = MinHeap()
-    h.insert(5)
-    h.insert(3)
-    h.insert(8)
-    h.insert(1)
-    h.print_heap()  # Output should be something like [1, 3, 8, 5]
+    # print("MinHeap Example:")
+    # h = MinHeap()
+    # h.insert(5)
+    # h.insert(3)
+    # h.insert(8)
+    # h.insert(1)
+    # h.print_heap()  # Output should be something like [1, 3, 8, 5]
 
-    print(h.extract_min())  # Should print 1
-    h.print_heap()  # Heap after removing 1
+    # print(h.extract_min())  # Should print 1
+    # h.print_heap()  # Heap after removing 1
 
     print("\nMaxHeap Example:")
     max_h = MaxHeap()
-    max_h.insert(5)
-    max_h.insert(3)
-    max_h.insert(8)
-    max_h.insert(1)
+    max_h.insert(28)
+    max_h.insert(25)
+    max_h.insert(15)
+    max_h.insert(20)
+    max_h.insert(11)
+    max_h.insert(12)
+    max_h.insert(9)
+    max_h.insert(12)
+    max_h.insert(10)
     max_h.print_heap()  # Output should be something like [8, 5, 3, 1]
+    
+    max_h.extract_max()
+    max_h.print_heap()

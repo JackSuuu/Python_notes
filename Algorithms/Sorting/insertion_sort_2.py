@@ -2,7 +2,7 @@
 
 list1 = [2, 4, 9, 8, 1]
 
-
+# Perform insertion sort without swapping elements repeatedly
 def insertion_sort_new(arr):
     length = len(arr)
     for i in range(0, length):

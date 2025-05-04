@@ -6,7 +6,7 @@ def quick_sort(sequence):
     if len(sequence) < 2 or not sequence:
         return sequence
     else:
-        pivot = sequence[0]
+        pivot = sequence[0]  # pivot could be first or mid or last element
         less = []
         more = []
         for each in sequence[1:]:

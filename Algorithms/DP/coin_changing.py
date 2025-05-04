@@ -85,14 +85,13 @@ def fewest_coins_dp(v):
             if coin <= i:
                 """
                 dp[i - coin] + 1 is the heart of dynamic programming
-                
                 """
                 dp[i] = min(dp[i], dp[i - coin] + 1) # dp[i - coin] + 1 is a cumulative process
 
 def fewest_coins_list_dp(v):
     dp = [float('inf')] * (v + 1)
     dp[0] = 0
-    coin_used = [0] * (v + 1)
+    coin_used = [0] * (v + 1) # to track what coin is used
 
     for i in range(1, v + 1):
         for coin in c_list:

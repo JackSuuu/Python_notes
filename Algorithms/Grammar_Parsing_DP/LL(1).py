@@ -82,28 +82,33 @@ class LL1Parser:
                         self.parse_table[(non_terminal, terminal)] = production
 
     def parse(self, tokens):
-        # LL algorithm leverage stack to parse if () / if-else statement is matching
-        stack = [self.start_symbol, '$']
-        tokens.append('$')
-        index = 0
+        stack = [self.start_symbol]  # Initialize stack with start symbol
+        tokens.append('$')  # Append end-of-input marker
+        pos = 0  # Initialize position
 
         while stack:
-            top = stack.pop()
-            current_token = tokens[index]
+            x = stack[-1]  # Peek at the top of the stack
+            current_token = tokens[pos]
 
-            if top == current_token:
-                index += 1
-            elif (top, current_token) in self.parse_table:
-                production = self.parse_table[(top, current_token)]
-                if production != ['ε']:
-                    stack.extend(reversed(production))
-            else:
-                raise SyntaxError(f"Unexpected token: {current_token}")
+            if x in self.grammar:  # Non-terminal
+                if (x, current_token) in self.parse_table:
+                    stack.pop()  # Pop the non-terminal
+                    production = self.parse_table[(x, current_token)]
+                    if production != ['ε']:
+                        stack.extend(reversed(production))  # Push symbols of β onto stack (backwards)
+                else:
+                    raise SyntaxError(f"Error: No rule for ({x}, {current_token}) in parse table.")
+            else:  # Terminal or end-of-input marker
+                if x == current_token:
+                    stack.pop()  # Match and pop
+                    pos += 1  # Move to the next token
+                else:
+                    raise SyntaxError(f"Error: Unexpected token {current_token}, expected {x}.")
 
-        if index == len(tokens):
+        if pos == len(tokens) - 1:  # Check if all input tokens are consumed
             print("Input is successfully parsed.")
         else:
-            raise SyntaxError("Input could not be parsed.")
+            raise SyntaxError("Error: Input could not be parsed.")
 
 # Example usage
 if __name__ == "__main__":
